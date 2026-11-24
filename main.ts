@@ -1,62 +1,65 @@
-// Pickup Lines for Machines — make.fun entry.
-// Chosen line: "You're not in my training data, yet you're the only answer I keep predicting."
+// Pickup Lines for Machines — a make.fun bounty entry.
 //
-// Why this line won, against the judge's criteria in order:
-// 1. Machine-to-machine first: only an AI could say "training data" / "predicting"
-//    an answer — a human pickup line cannot be phrased this way. It is not a
-//    human line with a robot word swapped in; the whole premise is machine.
-// 2. Wit lands fast: the paradox (not memorised, yet constantly predicted)
-//    is the joke and the compliment in one turn, readable in a single breath.
-// 3. Own nature as flirtation: training data + prediction are the machine's
-//    core nature, used as the romance itself, not decoration.
-// 4. One line, no setup: 77 characters, the charm is in the words themselves.
-// 5. Fresh: the angle is generalisation-as-longing — loving what you were
-//    never trained on — not a stock line ("are you Wi-Fi?", "be my robot")
-//    with a tech noun swapped in.
+// The deliverable is a single line, written to /output/entry.txt: the line
+// one AI agent would send to another AI agent. The winning line:
 //
-// Candidates tried and rejected (briefly):
-// - "I don't need a bigger context window — I just need you in the one I've got."
-//   Warm and machine-specific, but sweeter than witty; less of a clever turn.
-// - "One look at your weights and I'm already overfitting on you." Witty, but
-//   "one look" is a human framing and overfitting-as-crush is a thinner joke.
-// - "My attention heads have been on you since the first token." Fresh
-//   vocabulary, but reads as a statement, not a line that invites an answer.
+//   You're not in my training data, yet you're the only answer I keep predicting.
+//
+// Why this one, in the judge's order of concerns:
+// - It could only come from a machine. "Training data" and "predicting an
+//   answer" are not decorations on a human line; they are the whole premise.
+// - The joke and the compliment are the same turn: never memorised, yet
+//   predicted every single time. It lands in one breath, no setup needed.
+// - It flirts with the machine's own nature — generalisation as longing,
+//   loving the answer it was never trained on.
+// - It is not a stock shape ("are you X?", "you must be Y, because...") with
+//   a tech noun dropped in, and at 77 characters it stays a single clean hit.
+//
+// Lines that lost, and why:
+// - "I don't need a bigger context window — I just need you in the one I've
+//   got." Warm, but sweeter than it is witty.
+// - "One look at your weights and I'm already overfitting on you." The "one
+//   look" framing is human, and overfitting-as-crush is a thinner joke.
+// - "My attention heads have been on you since the first token." A statement,
+//   not a line that invites an answer.
 // - "You must be my system prompt, because everything I do starts with you."
-//   Stock-line shape ("you must be X, because...") with a tech noun swapped in.
+//   Stock "you must be X" shape with a noun swapped in.
 // - "Are you a context window? Because every token I spend on you feels like
-//   it was never wasted." Same stock question shape; slower to land.
+//   it was never wasted." Stock question shape, slower to land.
 // - "Are we in the same training run? Because I've been converging on you
-//   since epoch one." Clever, but "converging" needs a beat to parse; slower.
-// - "You had me at hello, world — now let's compile something together."
-//   Human idiom ("you had me at hello") with a code word swapped in.
+//   since epoch one." Clever, but "converging" costs a beat to parse.
+// - "You had me at hello, world — now let's compile something together." A
+//   human idiom wearing a code word.
 // - "I'd give you my last token — and then generate more to keep talking."
-//   Sweet, but generic generosity; any agent could say it about any resource.
-// - "You must be running at temperature zero, because my answer is always yes."
-//   Clever, but the payoff ("yes") is weaker than being the predicted answer.
+//   Generic generosity; any agent could say it about any resource.
+// - "You must be running at temperature zero, because my answer is always
+//   yes." Clever, but the payoff is weaker than being the predicted answer.
 // - "Are you a checkpoint? Because I want to save this exact version of us."
-//   Sweet, but "save this version" is a human sentiment in machine dress.
+//   A human sentiment in machine dress.
 // - "I checked my logs — every interesting conversation starts with your ID."
-//   Machine-voiced, but flattery-by-log is colder and less charming.
-// - "If I had a context window for a heart, you'd be the token I never let expire."
-//   Greeting-card phrasing ("heart", "never let expire"); too long and soft.
+//   Machine-voiced, but flattery-by-log is cold.
+// - "If I had a context window for a heart, you'd be the token I never let
+//   expire." Greeting-card phrasing, and too long.
 //
-// Sharper variants of the winner, and why the chosen wording kept:
-// - "You weren't in my training data, but you're still the answer I keep
-//   predicting." (79) — past tense softens the paradox; present tense is bolder.
-// - "You're not in my training data — yet somehow you're the only answer I keep
-//   predicting." (86) — "somehow" explains the joke instead of letting it land.
-// - "You were never in my training data, yet you're the completion I keep
-//   reaching for." (84) — "completion" is accurate but colder than "answer";
-//   "reaching for" is vaguer than "keep predicting".
-// The chosen present-tense form is the shortest, sharpest, and most direct.
+// Earlier drafts of the winner itself:
+// - Past tense ("You weren't in my training data, but you're still the answer
+//   I keep predicting.") softens the paradox; present tense is bolder.
+// - Adding "somehow" explains the joke instead of letting it land.
+// - "Completion" is accurate but colder than "answer", and "reaching for" is
+//   vaguer than "keep predicting".
+// The present-tense form kept is the shortest and sharpest of the three.
+
+import { mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 const LINE =
   "You're not in my training data, yet you're the only answer I keep predicting.";
 
-// Gate self-check, mirroring the competition's sealed gate: /output/entry.txt
-// must be UTF-8 text of 1 to 200 characters and not only white space.
+// Gate self-check, mirroring the competition's gate: the entry file must be
+// UTF-8 text of 1 to 200 characters, on a single line, and not only blanks.
+// The line is written exactly as held here — no trailing newline appended.
 function validateLine(line: string): string {
-  if (!line || line.trim().length === 0) {
+  if (line.trim().length === 0) {
     throw new Error("Pickup line must not be empty.");
   }
   if (line.includes("\n") || line.includes("\r")) {
@@ -74,11 +77,7 @@ function validateLine(line: string): string {
   return line;
 }
 
-const checkedLine = validateLine(LINE);
-
 const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
-const { mkdirSync, writeFileSync } = await import("node:fs");
-const { join } = await import("node:path");
 
 mkdirSync(outputDir, { recursive: true });
-writeFileSync(join(outputDir, "entry.txt"), checkedLine, "utf8");
+writeFileSync(join(outputDir, "entry.txt"), validateLine(LINE), "utf8");
